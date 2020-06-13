@@ -20,14 +20,17 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 //    on load function
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
         
 //        sets up location manager
         locationManager.delegate = self
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
         locationManager.requestWhenInUseAuthorization()
         locationManager.startUpdatingLocation()
-        
+
+//        adds double tap recognizer
+        let addLocation = UITapGestureRecognizer(target: self, action: #selector(setDestination))
+        addLocation.numberOfTapsRequired = 2
+        mapView.addGestureRecognizer(addLocation)
     }
 
 //    MARK: updates location in map when user moves - displays current location
@@ -42,6 +45,19 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         
 //        displays region
         mapView.setRegion(region, animated: true)
+    }
+    
+//    MARK: method to set up the destination on double tap
+    @objc func setDestination(sender: UITapGestureRecognizer) {
+        
+        let destination = sender.location(in: mapView)
+        let desCoordinate = mapView.convert(destination, toCoordinateFrom: mapView)
+        let annotation = MKPointAnnotation()
+        annotation.title = "My destination"
+        annotation.coordinate = desCoordinate
+        
+        mapView.removeAnnotations(mapView.annotations)
+        mapView.addAnnotation(annotation)
     }
 
 }
