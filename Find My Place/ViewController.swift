@@ -59,6 +59,20 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         mapView.removeAnnotations(mapView.annotations)
         mapView.addAnnotation(annotation)
     }
+}
 
+//     MARK: - change annotation view
+extension ViewController: MKMapViewDelegate {
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+        if annotation is MKUserLocation {
+            return nil
+        }
+        // add custom annotation with image
+        let newAnnotation = self.mapView.dequeueReusableAnnotationView(withIdentifier: "droppablePin") ?? MKPinAnnotationView()
+        newAnnotation.image = UIImage(named: "finish")
+        newAnnotation.canShowCallout = true
+        newAnnotation.rightCalloutAccessoryView = UIButton(type: .detailDisclosure)
+        return newAnnotation
+    }
 }
 
