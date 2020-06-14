@@ -14,6 +14,9 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 //reference to storyboard mapview
     @IBOutlet weak var mapView: MKMapView!
     
+//    zoom value for map
+    var zoomVal: Double = 1.0
+    
 //    direction preference mode
     var transitMode: Bool = true
     
@@ -81,7 +84,26 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     }
     
     
-//    MARK: shows the usage info
+    @IBAction func zoomMap(_ sender: UIStepper) {
+        
+        let check: Bool = (sender.value > zoomVal)
+        print(sender.value)
+        if(check) {
+            var region: MKCoordinateRegion = mapView.region
+            region.span.latitudeDelta /= 2.0
+            region.span.longitudeDelta /= 2.0
+            mapView.setRegion(region, animated: true)
+            zoomVal += 0.1
+        }
+        else {
+            var region: MKCoordinateRegion = mapView.region
+            region.span.latitudeDelta = min(region.span.latitudeDelta * 2.0, 180.0)
+            region.span.longitudeDelta = min(region.span.longitudeDelta * 2.0, 180.0)
+            mapView.setRegion(region, animated: true)
+            zoomVal -= 0.1
+        }
+    }
+    //    MARK: shows the usage info
     @IBAction func showAlert(_ sender: UIButton) {
         
         let alertMsg = UIAlertController(title: "Welcome to FindMyWay", message: "Usage is simple.\n\nJust toggle the button above the screen to switch between walking or automobile mode (Highlighted means walking).\n\nPress the FindMyWay icon below and see the route. Simple!", preferredStyle: .alert)
