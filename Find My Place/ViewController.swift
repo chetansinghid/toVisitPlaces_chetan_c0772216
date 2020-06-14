@@ -40,6 +40,8 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         mapView.addGestureRecognizer(addLocation)
     }
 
+    
+    
 //    MARK: updates location in map when user moves - displays current location
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
 //        delta region specifiers
@@ -57,6 +59,8 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 //        displays region
         mapView.setRegion(region, animated: true)
     }
+    
+    
     
 //    MARK: method to set up the destination on double tap
     @objc func setDestination(sender: UITapGestureRecognizer) {
@@ -76,11 +80,21 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         mapView.addAnnotation(annotation)
     }
     
-//    MARK: changes the direction mode
+    
+//    MARK: shows the usage info
+    @IBAction func showAlert(_ sender: UIButton) {
+        
+        let alertMsg = UIAlertController(title: "Welcome to FindMyWay", message: "Usage is simple.\n\nJust toggle the button above the screen to switch between walking or automobile mode (Highlighted means walking).\n\nPress the FindMyWay icon below and see the route. Simple!", preferredStyle: .alert)
+        alertMsg.addAction(UIAlertAction(title: "Cool!", style: .default))
+        self.present(alertMsg, animated: true)
+    }
+    //    MARK: changes the direction mode
     @IBAction func toggleMode(_ sender: UISwitch) {
         transitMode = !transitMode
         print(transitMode)
     }
+    
+    
     
     //    MARK: shows directions on clicking the button
     @IBAction func showDirections(_ sender: Any) {
@@ -118,6 +132,8 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     }
 }
 
+
+
 //MARK: make ui changes
 extension ViewController: MKMapViewDelegate {
 //     MARK: - change annotation view
@@ -134,6 +150,8 @@ extension ViewController: MKMapViewDelegate {
         newAnnotation.rightCalloutAccessoryView = UIButton(type: .detailDisclosure)
         return newAnnotation
     }
+    
+    
 //    MARK: routes overlay
     func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
         if overlay is MKPolyline {
