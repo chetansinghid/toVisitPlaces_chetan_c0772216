@@ -186,7 +186,7 @@ extension ViewController: MKMapViewDelegate {
     func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
         if overlay is MKPolyline {
             let line = MKPolylineRenderer(overlay: overlay)
-            line.lineWidth = 3
+            line.lineWidth = 5
 //            sets different line color for each mode
             if(self.transitMode) {
                 line.strokeColor = UIColor.green
