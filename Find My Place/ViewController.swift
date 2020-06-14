@@ -48,8 +48,8 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 //    MARK: updates location in map when user moves - displays current location
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
 //        delta region specifiers
-        let latDelta: CLLocationDegrees = 0.05
-        let lngDelta: CLLocationDegrees = 0.05
+        let latDelta: CLLocationDegrees = 0.15
+        let lngDelta: CLLocationDegrees = 0.15
         
 //        create region to show to user
         let span = MKCoordinateSpan(latitudeDelta: latDelta, longitudeDelta: lngDelta)
@@ -84,6 +84,8 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     }
     
     
+    
+//    MARK: zoom map stepper
     @IBAction func zoomMap(_ sender: UIStepper) {
         
         let check: Bool = (sender.value > zoomVal)
@@ -103,6 +105,9 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
             zoomVal -= 0.1
         }
     }
+    
+    
+    
     //    MARK: shows the usage info
     @IBAction func showAlert(_ sender: UIButton) {
         
