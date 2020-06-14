@@ -114,7 +114,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     //    MARK: shows the usage info
     @IBAction func showAlert(_ sender: UIButton) {
         
-        let alertMsg = UIAlertController(title: "Welcome to FindMyWay", message: "Usage is simple.\n\nJust toggle the button above the screen to switch between walking or automobile mode (Highlighted means walking).\n\nPress the FindMyWay icon below and see the route. Simple!", preferredStyle: .alert)
+        let alertMsg = UIAlertController(title: "Ready to add places?", message: "Usage is simple.\n\n1.Just toggle the button above the screen to switch between walking or automobile mode (Highlighted means walking).\n\n2.Press the FindMyWay icon below and see the route.\n\n3.Tap on place flag to see options to add it to your list\n\n4. If you can you can drag the flag to change your place location. Simple!", preferredStyle: .alert)
         alertMsg.addAction(UIAlertAction(title: "Cool!", style: .default))
         self.present(alertMsg, animated: true)
     }

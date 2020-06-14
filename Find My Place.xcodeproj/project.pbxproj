@@ -15,6 +15,7 @@
 		8420A0762495596D00188F00 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8420A0752495596D00188F00 /* MapKit.framework */; };
 		8420A0782495597C00188F00 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8420A0772495597C00188F00 /* CoreLocation.framework */; };
 		8434E2B024969EA2008D4A8C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8434E2AE24969EA2008D4A8C /* Main.storyboard */; };
+		8434E2B42496CDB1008D4A8C /* InitialViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8434E2B32496CDB1008D4A8C /* InitialViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +29,7 @@
 		8420A0752495596D00188F00 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		8420A0772495597C00188F00 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		8434E2AF24969EA2008D4A8C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		8434E2B32496CDB1008D4A8C /* InitialViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InitialViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -70,6 +72,7 @@
 				8420A06B249558F400188F00 /* LaunchScreen.storyboard */,
 				8420A06E249558F400188F00 /* Info.plist */,
 				8434E2AE24969EA2008D4A8C /* Main.storyboard */,
+				8434E2B32496CDB1008D4A8C /* InitialViewController.swift */,
 			);
 			path = "Find My Place";
 			sourceTree = "<group>";
@@ -157,6 +160,7 @@
 				8420A065249558F300188F00 /* ViewController.swift in Sources */,
 				8420A061249558F300188F00 /* AppDelegate.swift in Sources */,
 				8420A063249558F300188F00 /* SceneDelegate.swift in Sources */,
+				8434E2B42496CDB1008D4A8C /* InitialViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
