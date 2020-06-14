@@ -77,6 +77,9 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 //        adds placemark for directions
         let placemark = MKPlacemark(coordinate: desCoordinate)
         destCoordinates = MKMapItem(placemark: placemark)
+
+//           removes previous route
+        self.mapView.removeOverlays(self.mapView.overlays)
         
 //        removes previous annotation and adds new one
         mapView.removeAnnotations(mapView.annotations)
