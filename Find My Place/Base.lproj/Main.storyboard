@@ -14,11 +14,23 @@
                     <view key="view" contentMode="scaleToFill" id="l2Z-Ln-wBY">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="wgG-NB-n5c">
+                                <rect key="frame" x="0.0" y="88" width="414" height="774"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                            </tableView>
+                        </subviews>
                         <color key="backgroundColor" red="0.66007718901083279" green="0.95881233808290156" blue="0.85895061367273151" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="wgG-NB-n5c" firstAttribute="leading" secondItem="iYm-we-lJx" secondAttribute="leading" id="0kB-Sn-hkI"/>
+                            <constraint firstItem="iYm-we-lJx" firstAttribute="bottom" secondItem="wgG-NB-n5c" secondAttribute="bottom" id="ovM-hR-qyq"/>
+                            <constraint firstItem="wgG-NB-n5c" firstAttribute="top" secondItem="iYm-we-lJx" secondAttribute="top" id="uJv-ZV-Blt"/>
+                            <constraint firstItem="iYm-we-lJx" firstAttribute="trailing" secondItem="wgG-NB-n5c" secondAttribute="trailing" id="ydq-kJ-MK8"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="iYm-we-lJx"/>
                     </view>
                     <navigationItem key="navigationItem" title="To Visit Place" largeTitleDisplayMode="always" id="7mc-jC-qM2">
-                        <barButtonItem key="leftBarButtonItem" style="plain" id="bio-gW-6je">
+                        <barButtonItem key="leftBarButtonItem" id="bio-gW-6je">
                             <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="eak-zl-RMT">
                                 <rect key="frame" x="20" y="5.5" width="93" height="33"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -29,7 +41,7 @@
                                 </connections>
                             </button>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" style="plain" id="Bt5-Jn-6C1">
+                        <barButtonItem key="rightBarButtonItem" id="Bt5-Jn-6C1">
                             <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="d6V-1G-Y8a">
                                 <rect key="frame" x="302" y="5.5" width="92" height="33"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -41,6 +53,9 @@
                             </button>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="tableView" destination="wgG-NB-n5c" id="IUK-Yr-nsH"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ZtR-9B-UoF" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -104,7 +119,7 @@
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <navigationItem key="navigationItem" id="9nF-UX-sxh">
-                        <barButtonItem key="rightBarButtonItem" style="plain" id="VYH-Rm-5sk">
+                        <barButtonItem key="rightBarButtonItem" id="VYH-Rm-5sk">
                             <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="CHj-dN-M0b">
                                 <rect key="frame" x="358" y="1" width="36" height="42"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>

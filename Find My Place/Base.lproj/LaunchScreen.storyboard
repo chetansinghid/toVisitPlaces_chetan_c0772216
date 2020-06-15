@@ -15,19 +15,27 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="To Visit Place" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vHb-u8-xM7">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="To Visit Place" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vHb-u8-xM7">
                                 <rect key="frame" x="85" y="508" width="245" height="48"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="40"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="destination" translatesAutoresizingMaskIntoConstraints="NO" id="KLM-Aj-nCr">
-                                <rect key="frame" x="87" y="328" width="240" height="128"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="destination" translatesAutoresizingMaskIntoConstraints="NO" id="KLM-Aj-nCr">
+                                <rect key="frame" x="87" y="396" width="240" height="60"/>
                             </imageView>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="vHb-u8-xM7" secondAttribute="bottom" constant="306" id="IFT-2x-C9m"/>
+                            <constraint firstItem="vHb-u8-xM7" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="85" id="Q7G-mX-jkJ"/>
+                            <constraint firstItem="vHb-u8-xM7" firstAttribute="top" secondItem="KLM-Aj-nCr" secondAttribute="bottom" constant="52" id="Wyh-dN-0ZF"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="vHb-u8-xM7" secondAttribute="trailing" constant="84" id="ejJ-TY-eN1"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="KLM-Aj-nCr" secondAttribute="trailing" constant="87" id="fTd-dk-neu"/>
+                            <constraint firstItem="vHb-u8-xM7" firstAttribute="top" secondItem="KLM-Aj-nCr" secondAttribute="bottom" constant="52" id="q0y-Rj-o9m"/>
+                            <constraint firstItem="KLM-Aj-nCr" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="352" id="qS4-aX-1Vr"/>
+                            <constraint firstItem="KLM-Aj-nCr" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="87" id="zSu-OY-cuZ"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                 </viewController>

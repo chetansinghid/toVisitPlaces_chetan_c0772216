@@ -23,6 +23,9 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 //    location manager declaration
     var locationManager = CLLocationManager()
     
+//    coordinates to get address location
+    var locCoordinates: CLLocationCoordinate2D = CLLocationCoordinate2D()
+    
 //    directions variable
     var srcCoordinates: MKMapItem = MKMapItem()
     var destCoordinates: MKMapItem = MKMapItem()
@@ -74,6 +77,9 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         annotation.title = "My destination"
         annotation.coordinate = desCoordinate
         
+//        sets value for address details
+        locCoordinates = desCoordinate
+        
 //        adds placemark for directions
         let placemark = MKPlacemark(coordinate: desCoordinate)
         destCoordinates = MKMapItem(placemark: placemark)
@@ -118,6 +124,9 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         alertMsg.addAction(UIAlertAction(title: "Cool!", style: .default))
         self.present(alertMsg, animated: true)
     }
+    
+    
+    
     //    MARK: changes the direction mode
     @IBAction func toggleMode(_ sender: UISwitch) {
         transitMode = !transitMode
@@ -181,6 +190,20 @@ extension ViewController: MKMapViewDelegate {
         return newAnnotation
     }
     
+
+//      MARK: - add item annotation view
+    func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
+        let alertController = UIAlertController(title: "Your Place", message: "This place seems fun!", preferredStyle: .alert)
+        let addPlacebutton = UIAlertAction(title: "Add to List", style: .default) { action in
+//            calls the method to add data
+            self.addPlace()
+        }
+        let cancelButton = UIAlertAction(title: "Nah", style: .cancel, handler: nil)
+        alertController.addAction(addPlacebutton)
+        alertController.addAction(cancelButton)
+        present(alertController, animated: true, completion: nil)
+    }
+    
     
 //    MARK: routes overlay
     func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
@@ -197,6 +220,72 @@ extension ViewController: MKMapViewDelegate {
             return line
         }
         return MKOverlayRenderer()
+    }
+    
+    
+    
+//    MARK: method to add place to userdefaults
+    func addPlace() {
+        let geocoder = CLGeocoder()
+        
+//        convert coordinates to CLLocation to pass as argument
+        let point = CLLocation(latitude: locCoordinates.latitude, longitude: locCoordinates.longitude)
+//        fetches the result
+        geocoder.reverseGeocodeLocation(point) { (placemarks,error) in
+            guard let placemark = placemarks?.first else {
+                print("No placemark available")
+                return
+            }
+//            takes required value as stores as string
+            let locationName = placemark.name ?? ""
+            let street = placemark.thoroughfare ?? ""
+            let city = placemark.locality ?? ""
+            let zipCode = placemark.postalCode ?? ""
+            let country = placemark.country ?? ""
+            
+            let placeName = "\(locationName) \(street) \(city) \(zipCode) \(country)"
+            
+//            calls function to store to userdefault
+            MyPlaceItem.addPlace(latitude: self.locCoordinates.latitude, longitude: self.locCoordinates.longitude, address: placeName)
+        }
+        
+    }
+}
+
+
+
+//  MARK: class to store and retrieve the values in userdefaults
+public class MyPlaceItem: Codable {
+    var latitude: Double
+    var longitude: Double
+//    stores address
+    var name: String
+//     constructor
+    init(lat : Double, long: Double, name: String) {
+        self.latitude = lat
+        self.longitude = long
+        self.name = name
+    }
+//      adds new place
+    public static func addPlace(latitude: Double, longitude: Double, address: String){
+//        new array created as returned array is immutable
+        var newPlaceArray = [MyPlaceItem]()
+        var oldPlaceArray = [MyPlaceItem]()
+        if(self.getPlace() != nil) {
+            oldPlaceArray = self.getPlace()!
+        }
+//        adds new item
+        let newPlace = MyPlaceItem(lat: latitude, long: longitude, name: address)
+        newPlaceArray = oldPlaceArray
+        newPlaceArray.append(newPlace)
+        let placeData = try! JSONEncoder().encode(newPlaceArray)
+        UserDefaults.standard.set(placeData, forKey: "places")
+    }
+//      fetching the items
+    public static func getPlace() -> [MyPlaceItem]?{
+        guard let placeData = UserDefaults.standard.data(forKey: "places") else{ return nil}
+        let placeArray = try! JSONDecoder().decode([MyPlaceItem].self, from: placeData)
+        return placeArray
     }
 }
 
