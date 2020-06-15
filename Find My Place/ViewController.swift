@@ -287,5 +287,13 @@ public class MyPlaceItem: Codable {
         let placeArray = try! JSONDecoder().decode([MyPlaceItem].self, from: placeData)
         return placeArray
     }
+//       removes the item
+    public static func removePlace(index: Int) {
+        let oldPlaceArray = self.getPlace()
+        var newPlaceArray = oldPlaceArray
+        newPlaceArray?.remove(at: index)
+        let placeData = try! JSONEncoder().encode(newPlaceArray)
+        UserDefaults.standard.set(placeData, forKey: "places")
+    }
 }
 

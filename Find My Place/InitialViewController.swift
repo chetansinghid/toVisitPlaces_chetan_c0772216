@@ -60,12 +60,17 @@ class InitialViewController: UIViewController, UITableViewDataSource, UITableVie
     
     
 //    MARK: table delete item method
-    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        let deleteItem = UIContextualAction(style: .destructive, title: "Delete") { (action, view, nil) in
-            print("\(indexPath)")
-        }
-        return UISwipeActionsConfiguration(actions: [deleteItem])
+func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+    let deleteItem = UIContextualAction(style: .destructive, title: "Delete") { (action, view, nil) in
+        MyPlaceItem.removePlace(index: indexPath.row)
+        self.data = MyPlaceItem.getPlace()
+        self.tableView.reloadData()
     }
+    deleteItem.backgroundColor =  #colorLiteral(red: 0.660077189, green: 0.9588123381, blue: 0.8589506137, alpha: 1)
+//    deleteItem.image = UIImage(named: "delete")
+    return UISwipeActionsConfiguration(actions: [deleteItem])
+}
+
     
     
     
