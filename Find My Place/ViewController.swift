@@ -14,6 +14,10 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 //reference to storyboard mapview
     @IBOutlet weak var mapView: MKMapView!
     
+//    values to call method for loading placemark
+    var isTapped: Bool = false
+    var row: Int = 0
+    
 //    zoom value for map
     var zoomVal: Double = 1.0
     
@@ -168,6 +172,37 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
             let rect = route.polyline.boundingMapRect
             self.mapView.setVisibleMapRect(rect, edgePadding: UIEdgeInsets(top: 100, left: 100, bottom: 100, right: 100), animated: true)
         }
+    }
+    
+    
+    
+//    MARK: logic for calling method to show location on tapping cell
+    override func viewWillAppear(_ animated: Bool) {
+        if(isTapped) {
+            self.showPlaceOnTap(index: row)
+        }
+    }
+//    method to be called to show saved location
+    func showPlaceOnTap(index: Int) {
+        let item = MyPlaceItem.getPlace()?[index]
+        let desCoordinate = CLLocationCoordinate2D(latitude: item!.latitude, longitude: item!.longitude)
+        let annotation = MKPointAnnotation()
+        annotation.title = "My destination"
+        annotation.coordinate = desCoordinate
+        
+//        sets value for address details
+        locCoordinates = desCoordinate
+        
+//        adds placemark for directions
+        let placemark = MKPlacemark(coordinate: desCoordinate)
+        destCoordinates = MKMapItem(placemark: placemark)
+
+//           removes previous route
+        self.mapView.removeOverlays(self.mapView.overlays)
+        
+//        removes previous annotation and adds new one
+        mapView.removeAnnotations(mapView.annotations)
+        mapView.addAnnotation(annotation)
     }
 }
 

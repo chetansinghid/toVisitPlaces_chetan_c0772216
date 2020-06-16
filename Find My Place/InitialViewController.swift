@@ -9,9 +9,14 @@
 import UIKit
 
 class InitialViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
-    
+//    reference to table
     @IBOutlet weak var tableView: UITableView!
+//    variables to store data for places
     var data = MyPlaceItem.getPlace()
+//    var to store index to pass to next view controller on tap
+    var indexForCell: Int = 0
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setUpTable()
@@ -59,17 +64,36 @@ class InitialViewController: UIViewController, UITableViewDataSource, UITableVie
     
     
     
-//    MARK: table delete item method
-func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-    let deleteItem = UIContextualAction(style: .destructive, title: "Delete") { (action, view, nil) in
-        MyPlaceItem.removePlace(index: indexPath.row)
-        self.data = MyPlaceItem.getPlace()
-        self.tableView.reloadData()
+    
+//    MARK: tap selection logic for table cell
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        indexForCell = indexPath.row
+        performSegue(withIdentifier: "showLocation", sender: self)
     }
-    deleteItem.backgroundColor =  #colorLiteral(red: 0.660077189, green: 0.9588123381, blue: 0.8589506137, alpha: 1)
-//    deleteItem.image = UIImage(named: "delete")
-    return UISwipeActionsConfiguration(actions: [deleteItem])
-}
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "showLocation" {
+            if let destinationView = segue.destination as? ViewController {
+                destinationView.isTapped = true
+                destinationView.row = indexForCell
+            }
+        }
+    }
+    
+    
+    
+    
+//    MARK: table delete item method
+    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let deleteItem = UIContextualAction(style: .destructive, title: "Delete") { (action, view, nil) in
+            MyPlaceItem.removePlace(index: indexPath.row)
+            self.data = MyPlaceItem.getPlace()
+            self.tableView.reloadData()
+        }
+        deleteItem.backgroundColor =  #colorLiteral(red: 0.660077189, green: 0.9588123381, blue: 0.8589506137, alpha: 1)
+    //    deleteItem.image = UIImage(named: "delete")
+        return UISwipeActionsConfiguration(actions: [deleteItem])
+    }
 
     
     
