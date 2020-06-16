@@ -78,7 +78,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         let destination = sender.location(in: mapView)
         let desCoordinate = mapView.convert(destination, toCoordinateFrom: mapView)
         let annotation = MKPointAnnotation()
-        annotation.title = "My destination"
+        annotation.title = "My Place"
         annotation.coordinate = desCoordinate
         
 //        sets value for address details
@@ -187,7 +187,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         let item = MyPlaceItem.getPlace()?[index]
         let desCoordinate = CLLocationCoordinate2D(latitude: item!.latitude, longitude: item!.longitude)
         let annotation = MKPointAnnotation()
-        annotation.title = "My destination"
+        annotation.title = "My Place"
         annotation.coordinate = desCoordinate
         
 //        sets value for address details
@@ -221,6 +221,8 @@ extension ViewController: MKMapViewDelegate {
         let newAnnotation = self.mapView.dequeueReusableAnnotationView(withIdentifier: "droppablePin") ?? MKPinAnnotationView()
         newAnnotation.image = UIImage(named: "finish")
         newAnnotation.canShowCallout = true
+//      for draggable feature
+        newAnnotation.isDraggable = true
         newAnnotation.rightCalloutAccessoryView = UIButton(type: .detailDisclosure)
         return newAnnotation
     }
@@ -228,16 +230,48 @@ extension ViewController: MKMapViewDelegate {
 
 //      MARK: - add item annotation view
     func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
-        let alertController = UIAlertController(title: "Your Place", message: "This place seems fun!", preferredStyle: .alert)
+        let alertController = UIAlertController(title: "Your Place", message: "This place seems fun!\nWant to add to your list?", preferredStyle: .alert)
         let addPlacebutton = UIAlertAction(title: "Add to List", style: .default) { action in
 //            calls the method to add data
             self.addPlace()
         }
-        let cancelButton = UIAlertAction(title: "Nah", style: .cancel, handler: nil)
+        let cancelButton = UIAlertAction(title: "Not Really", style: .default, handler: nil)
         alertController.addAction(addPlacebutton)
         alertController.addAction(cancelButton)
         present(alertController, animated: true, completion: nil)
     }
+    
+    
+//      MARK: method to be called when dragging end
+    func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, didChange newState: MKAnnotationView.DragState, fromOldState oldState: MKAnnotationView.DragState) {
+        if(newState == MKAnnotationView.DragState.ending) {
+            let newLocation: CLLocationCoordinate2D = view.annotation!.coordinate
+            locCoordinates = newLocation
+            let geocoder = CLGeocoder()
+                    
+    //        convert coordinates to CLLocation to pass as argument
+            let point = CLLocation(latitude: locCoordinates.latitude, longitude: locCoordinates.longitude)
+    //        fetches the result
+            geocoder.reverseGeocodeLocation(point) { (placemarks,error) in
+                guard let placemark = placemarks?.first else {
+                    print("No placemark available")
+                    return
+                }
+    //            takes required value as stores as string
+                let locationName = placemark.name ?? ""
+                let street = placemark.thoroughfare ?? ""
+                let city = placemark.locality ?? ""
+                let zipCode = placemark.postalCode ?? ""
+                let country = placemark.country ?? ""
+                
+                let placeName = "\(locationName) \(street) \(city) \(zipCode) \(country)"
+                
+//                edits location for the place
+                MyPlaceItem.editPlace(latitude: self.locCoordinates.latitude, longitude: self.locCoordinates.longitude, address: placeName, index: self.row)
+            }
+        }
+    }
+    
     
     
 //    MARK: routes overlay
@@ -327,6 +361,18 @@ public class MyPlaceItem: Codable {
         let oldPlaceArray = self.getPlace()
         var newPlaceArray = oldPlaceArray
         newPlaceArray?.remove(at: index)
+        let placeData = try! JSONEncoder().encode(newPlaceArray)
+        UserDefaults.standard.set(placeData, forKey: "places")
+    }
+//    edits the item
+    public static func editPlace(latitude: Double, longitude: Double, address: String, index: Int) {
+        let oldPlaceArray = MyPlaceItem.getPlace()
+        var newPlaceArray = oldPlaceArray
+        
+//        adds new item
+        let newPlace = MyPlaceItem(lat: latitude, long: longitude, name: address)
+        newPlaceArray?.remove(at: index)
+        newPlaceArray?.insert(newPlace, at: index)
         let placeData = try! JSONEncoder().encode(newPlaceArray)
         UserDefaults.standard.set(placeData, forKey: "places")
     }

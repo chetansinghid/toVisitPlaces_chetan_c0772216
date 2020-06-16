@@ -90,8 +90,8 @@ class InitialViewController: UIViewController, UITableViewDataSource, UITableVie
             self.data = MyPlaceItem.getPlace()
             self.tableView.reloadData()
         }
-        deleteItem.backgroundColor =  #colorLiteral(red: 0.660077189, green: 0.9588123381, blue: 0.8589506137, alpha: 1)
-    //    deleteItem.image = UIImage(named: "delete")
+        deleteItem.backgroundColor =  #colorLiteral(red: 0.6000000238, green: 0.6000000238, blue: 0.6000000238, alpha: 1)
+        deleteItem.image = UIImage(systemName: "trash.circle.fill")
         return UISwipeActionsConfiguration(actions: [deleteItem])
     }
 
